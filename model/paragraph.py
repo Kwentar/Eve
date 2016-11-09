@@ -1,4 +1,4 @@
-from Sentence import Sentence
+from model.sentence import Sentence
 
 
 class Paragraph:

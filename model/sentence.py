@@ -1,4 +1,4 @@
-from Word import Word
+from model.word import Word
 
 
 class Sentence:

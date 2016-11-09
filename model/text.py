@@ -1,4 +1,4 @@
-from Paragraph import Paragraph
+from model.paragraph import Paragraph
 
 
 class Text:
