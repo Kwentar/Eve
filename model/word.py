@@ -9,3 +9,6 @@ class Word:
         self.normal_form = self.parse_res[0].normal_form
         self.text_form = text_form.lower()
         self.tag = self.parse_res[0].tag
+
+    def __repr__(self):
+        return self.text_form
