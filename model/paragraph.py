@@ -9,6 +9,9 @@ class Paragraph:
         self.post_process_sentences()
 
     def split(self):
+        # TODO: с инициалами фича следующая: если мы видим большую букву с точкой - то фамилия либо слева и справа -
+        # конец предложения (справа начало предложения с большой буквы). Если слева нет - то фамилия справа
+        # TODO: добавить всякие т.д. т.п.
         sentences = []
         curr_sentence = ''
         for index, sym in enumerate(self.paragraph):
@@ -28,6 +31,7 @@ class Paragraph:
         return sentences
 
     def post_process_sentences(self):
+
         last_word = None
         index = 0
         while index < len(self.sentences) - 1:
