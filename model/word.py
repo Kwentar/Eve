@@ -7,7 +7,7 @@ class Word:
         self.morphy = Morphy()
         self.parse_res = self.morphy.parse(text_form)
         self.normal_form = self.parse_res[0].normal_form
-        self.text_form = text_form.lower()
+        self.text_form = text_form
         self.tag = self.parse_res[0].tag
 
     def __repr__(self):

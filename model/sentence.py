@@ -14,3 +14,7 @@ class Sentence:
             if without_bad:
                 second_iter.append("".join(without_bad))
         return [Word(x) for x in second_iter]
+
+    def __add__(self, other):
+        self.sentence += ' ' + other.sentence
+        self.words = self.split()

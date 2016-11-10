@@ -9,3 +9,6 @@ class TestParagraph(TestCase):
         p = Paragraph('В. А. Уткин увеличил прибыль на 15.9%. Дал 5. Ударил Иванова А. Б.')
         self.assertListEqual([x.sentence for x in p.sentences], ['В. А. Уткин увеличил прибыль на 15.9%.',
                                                                  'Дал 5.', 'Ударил Иванова А. Б.'])
+        p = Paragraph('В. Уткин заметил Кривого А.Н. рядом с Сильным М.')
+        self.assertListEqual([x.sentence for x in p.sentences], ['В. Уткин заметил Кривого А.Н. рядом с Сильным М.'])
+
