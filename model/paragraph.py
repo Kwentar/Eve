@@ -103,3 +103,6 @@ class Paragraph:
                 and self.paragraph[index + 2] == '.':
             return True
         return False
+
+    def __repr__(self):
+        return "paragraph \"{}\" with sentences {}".format(self.paragraph, self.sentences)

@@ -9,3 +9,6 @@ class Text:
     def split(self):
         first_iter = self.text.replace('\r', '\n')
         return [Paragraph(x) for x in first_iter.split('\n') if x]
+
+    def __repr__(self):
+        return self.text

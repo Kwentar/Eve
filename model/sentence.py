@@ -7,6 +7,7 @@ class Sentence:
         self.words = self.split()
 
     def split(self):
+        # TODO: 15.9% - > 159 и добавить знаки препинания
         first_iter = self.sentence.split()
         second_iter = []
         for el in first_iter:
@@ -18,3 +19,6 @@ class Sentence:
     def __add__(self, other):
         self.sentence += ' ' + other.sentence
         self.words = self.split()
+
+    def __repr__(self):
+        return "sentence \"{}\" with words {} ".format(self.sentence, self.words)
