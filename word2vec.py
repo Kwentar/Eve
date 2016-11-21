@@ -62,8 +62,8 @@ with open('../russian_news_corpus/russian_news.txt', 'rt') as f:
                 new_word = "".join(filter(str.isalpha, word))
                 if new_word and new_word not in stop_words:
                     words.append(new_word)
-            if index > 200000:
-                break
+            #if index > 200000:
+            #   break
             index += 1
         except UnicodeDecodeError as ex:
             print(ex.reason)
@@ -168,7 +168,7 @@ with graph.as_default(), tf.device('/cpu:0'):
     similarity = tf.matmul(valid_embeddings, tf.transpose(normalized_embeddings))
 
 
-num_steps = 200001
+num_steps = 300001
 start = time.time()
 with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
@@ -201,7 +201,7 @@ with tf.Session(graph=graph) as session:
     final_embeddings = normalized_embeddings.eval()
 
 print("Train time: ", time.time()-start)
-num_points = 200
+num_points = 100
 
 tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000)
 two_d_embeddings = tsne.fit_transform(final_embeddings[1:num_points+1, :])
