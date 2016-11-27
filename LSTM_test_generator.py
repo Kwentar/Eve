@@ -5,11 +5,12 @@ from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
+import sys
 
-
-filename = "/home/kwent/Downloads/alice.txt"
+filename = "/home/kwent/Downloads/zaratustra.txt"
 raw_text = open(filename).read()
-raw_text = raw_text.lower()
+raw_text = raw_text.lower().replace("\n", " ").replace("!", ".").replace("*", "").replace("(", " ").replace(")", " ") \
+    .replace("_", " ").replace(":", ",").replace(";", ",").replace("a", "а").replace("x", "х")
 
 # create mapping of unique chars to integers
 chars = sorted(list(set(raw_text)))
@@ -47,9 +48,39 @@ model.add(Dropout(0.2))
 model.add(Dense(y.shape[1], activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 
-# define the checkpoint
-filepath="weights-improvement-{epoch:02d}-{loss:.4f}.hdf5"
-checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
-callbacks_list = [checkpoint]
 
-model.fit(X, y, nb_epoch=20, batch_size=128, callbacks=callbacks_list)
+def train():
+
+    # define the checkpoint
+    file_path = "weights-improvement-{epoch:02d}-{loss:.4f}.hdf5"
+    checkpoint = ModelCheckpoint(file_path, monitor='loss', verbose=1, save_best_only=True, mode='min')
+    callbacks_list = [checkpoint]
+
+    model.fit(X, y, nb_epoch=20, batch_size=128, callbacks=callbacks_list)
+
+
+def generate():
+    int_to_char = dict((i, c) for i, c in enumerate(chars))
+    # load the network weights
+    filename = "weights-improvement-00-2.8907.hdf5"
+    model.load_weights(filename)
+    model.compile(loss='categorical_crossentropy', optimizer='adam')
+    # pick a random seed
+    start = numpy.random.randint(0, len(dataX) - 1)
+    pattern = dataX[start]
+    print("Seed:")
+    print("\"", ''.join([int_to_char[value] for value in pattern]), "\"")
+    # generate characters
+    for i in range(1000):
+        x = numpy.reshape(pattern, (1, len(pattern), 1))
+        x = x / float(n_vocab)
+        prediction = model.predict(x, verbose=0)
+        index = numpy.argmax(prediction)
+        result = int_to_char[index]
+        seq_in = [int_to_char[value] for value in pattern]
+        sys.stdout.write(result)
+        pattern.append(index)
+        pattern = pattern[1:len(pattern)]
+    print("\nDone.")
+
+train()
