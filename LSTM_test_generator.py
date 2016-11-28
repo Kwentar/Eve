@@ -29,6 +29,9 @@ raw_text = open(filename).read()
 for sym in '0123456789-"':
     raw_text = raw_text.replace(sym, '')
 raw_text = raw_text.replace('?', '')
+while '  ' in raw_text:
+    raw_text = raw_text.replace('  ', ' ')
+
 # create mapping of unique chars to integers
 chars = sorted(list(set(raw_text)))
 char_to_int = dict((c, i) for i, c in enumerate(chars))
@@ -100,7 +103,7 @@ def train():
     generate = Generate()
     callbacks_list = [checkpoint, generate]
 
-    model.fit(X, y, nb_epoch=20, batch_size=128, callbacks=callbacks_list)
+    model.fit(X, y, nb_epoch=200, batch_size=128, callbacks=callbacks_list)
 
 
 train()
