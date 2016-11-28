@@ -9,6 +9,7 @@ from keras.utils import np_utils
 import sys
 import os
 
+
 def get_best_model():
     files = list(os.listdir('tmp'))
     if not files:
