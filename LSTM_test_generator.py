@@ -8,10 +8,11 @@ from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 import sys
 import os
+from articles import prepare_articles
 
 
 def get_best_model():
-    files = list(os.listdir('tmp'))
+    files = list(os.listdir('tmp_art'))
     if not files:
         return None
     best_epoch = 0
@@ -24,14 +25,16 @@ def get_best_model():
     return best_file
 
 
-filename = "zaratustra_clear.txt"
+'''filename = "zaratustra_clear.txt"
 raw_text = open(filename).read()
 for sym in '0123456789-"':
     raw_text = raw_text.replace(sym, '')
 raw_text = raw_text.replace('?', '')
 while '  ' in raw_text:
-    raw_text = raw_text.replace('  ', ' ')
+    raw_text = raw_text.replace('  ', ' ')'''
 
+raw_text = prepare_articles.get_text('/home/kwent/Projects/Eve/articles/norm_articles')
+raw_text = raw_text[:len(raw_text)//5]
 # create mapping of unique chars to integers
 chars = sorted(list(set(raw_text)))
 char_to_int = dict((c, i) for i, c in enumerate(chars))
@@ -72,7 +75,7 @@ int_to_char = dict((i, c) for i, c in enumerate(chars))
 # load the network weights
 filename = get_best_model()
 if filename:
-    model.load_weights(os.path.join('tmp', filename))
+    model.load_weights(os.path.join('tmp_art', filename))
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 
 
